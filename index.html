@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZEROKAR — Cut Food Cost Leakage Before It Becomes Waste</title>
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="ZEROKAR — Cut Food Cost Leakage Before It Becomes Waste" />
+  <meta property="og:description" content="AI-powered platform connecting restaurants to NGOs. Stop food waste. Feed communities. Scale impact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://via.placeholder.com/1200x630/0A1F14/E76F51?text=ZEROKAR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="ZEROKAR — Cut Food Cost Leakage Before It Becomes Waste" />
+  <meta name="twitter:description" content="AI-powered platform connecting restaurants to NGOs. Stop food waste. Feed communities." />
+  <meta name="description" content="ZEROKAR automates restaurant-to-NGO food redistribution using AI matching and logistics integration. Raising ₹1.5 Cr pre-seed." />
+
+  <!-- Google Fonts: Syne (headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ============================================================
+       CSS CUSTOM PROPERTIES & BASE STYLES
+    ============================================================ */
+    :root {
+      --bg-base:       #0A1F14;
+      --bg-alt:        #0F2B1A;
+      --bg-card:       #1B4332;
+      --border-card:   #2D5A3D;
+      --text-primary:  #F8F4E9;
+      --text-muted:    #A3B899;
+      --accent:        #E76F51;
+      --accent-hover:  #d4603f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Syne', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* ---- Noise texture overlay ---- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ---- Section alternation ---- */
+    .section-base { background-color: var(--bg-base); }
+    .section-alt  { background-color: var(--bg-alt);  }
+
+    /* ---- Cards ---- */
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+
+    /* ---- Buttons ---- */
+    .btn-primary {
+      background-color: var(--accent);
+      color: #0A1F14;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 14px 32px;
+      display: inline-block;
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(231,111,81,0.35);
+    }
+
+    .btn-secondary {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      border-radius: 9999px;
+      padding: 12px 32px;
+      display: inline-block;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .btn-secondary:hover {
+      background-color: rgba(231,111,81,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ---- Accent text ---- */
+    .accent { color: var(--accent); }
+    .muted  { color: var(--text-muted); }
+
+    /* ---- Divider line ---- */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-card), transparent);
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    /* ---- Navbar ---- */
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background-color: rgba(10,31,20,0.82);
+      border-bottom: 1px solid rgba(45,90,61,0.4);
+      transition: box-shadow 0.3s ease;
+    }
+    #navbar.scrolled {
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    }
+
+    /* ---- Hero gradient ---- */
+    .hero-gradient {
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(231,111,81,0.12) 0%, transparent 65%),
+                  radial-gradient(ellipse 60% 50% at 80% 50%, rgba(27,67,50,0.6) 0%, transparent 70%),
+                  var(--bg-base);
+    }
+
+    /* ---- Hero image placeholder ---- */
+    .hero-image-placeholder {
+      background: linear-gradient(135deg, #1B4332 0%, #0F2B1A 40%, #162f1e 70%, #1B4332 100%);
+      border: 1px solid var(--border-card);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-image-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(231,111,81,0.08) 0%, transparent 50%, rgba(163,184,153,0.05) 100%);
+    }
+
+    /* ---- Step connector arrows ---- */
+    .step-arrow {
+      color: var(--accent);
+      opacity: 0.5;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    /* ---- Market circles ---- */
+    .market-ring {
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 2px solid var(--border-card);
+      position: relative;
+    }
+
+    /* ---- Traction quote bar ---- */
+    .quote-bar {
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+    }
+
+    /* ---- Scroll fade-in animation ---- */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- Staggered children ---- */
+    .stagger-children > * { transition-delay: calc(var(--i, 0) * 80ms); }
+
+    /* ---- Stat number ---- */
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    /* ---- Section label pill ---- */
+    .section-label {
+      display: inline-block;
+      background: rgba(231,111,81,0.12);
+      border: 1px solid rgba(231,111,81,0.3);
+      color: var(--accent);
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 9999px;
+      padding: 5px 14px;
+      margin-bottom: 16px;
+    }
+
+    /* ---- Green glow for ask section ---- */
+    .ask-glow {
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(231,111,81,0.09) 0%, transparent 70%),
+                  var(--bg-alt);
+    }
+
+    /* ---- Retention badge ---- */
+    .retention-badge {
+      background: linear-gradient(135deg, rgba(231,111,81,0.2), rgba(231,111,81,0.05));
+      border: 1px solid rgba(231,111,81,0.4);
+    }
+
+    /* ---- Footer ---- */
+    footer {
+      background-color: #060f0a;
+      border-top: 1px solid var(--border-card);
+    }
+
+    /* ---- Scrollbar ---- */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--border-card); border-radius: 3px; }
+
+    /* ---- Mobile adjustments ---- */
+    @media (max-width: 640px) {
+      .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     NAVBAR — Sticky, blurred, logo left / CTA right
+============================================================ -->
+<nav id="navbar" aria-label="Main navigation">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2 group" aria-label="ZEROKAR home">
+      <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+           style="background:var(--accent);">
+        <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:#0A1F14;">ZK</span>
+      </div>
+      <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.03em;">
+        ZERO<span style="color:var(--accent);">KAR</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <div class="hidden md:flex items-center gap-8 text-sm" style="color:var(--text-muted);">
+      <a href="#problem"  class="hover:text-white transition-colors">Problem</a>
+      <a href="#solution" class="hover:text-white transition-colors">Solution</a>
+      <a href="#traction" class="hover:text-white transition-colors">Traction</a>
+      <a href="#team"     class="hover:text-white transition-colors">Team</a>
+    </div>
+
+    <!-- CTA -->
+    <a href="#ask" class="btn-primary text-sm" style="padding:10px 22px;">
+      Get Early Access
+    </a>
+
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     HERO — Full-width, dark background. Headline + CTAs + image
+============================================================ -->
+<section id="hero" class="hero-gradient section-base relative" style="padding: 100px 24px 80px;">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Left: Copy -->
+      <div class="fade-up">
+        <div class="section-label">Food-Tech · Pre-Seed 2025</div>
+
+        <h1 style="font-size:clamp(2.6rem,6vw,4.4rem);font-weight:800;line-height:1.05;margin-bottom:24px;">
+          Cut food cost leakage<br/>
+          <span style="color:var(--accent);">before it becomes</span><br/>
+          waste.
+        </h1>
+
+        <p style="font-size:clamp(1rem,2vw,1.2rem);color:var(--text-muted);max-width:480px;margin-bottom:12px;line-height:1.7;">
+          ZEROKAR automates restaurant-to-NGO food redistribution using AI matching and integrated logistics.
+        </p>
+        <p style="font-size:clamp(0.95rem,1.8vw,1.1rem);color:var(--text-muted);max-width:480px;margin-bottom:40px;line-height:1.7;">
+          Restaurants cut costs. Communities get fed. No coordination overhead.
+        </p>
+
+        <div class="flex flex-wrap gap-4">
+          <a href="#ask"      class="btn-primary">Partner With Us</a>
+          <a href="#howitworks" class="btn-secondary">Watch Demo ↓</a>
+        </div>
+
+        <!-- Social proof micro-line -->
+        <p style="margin-top:32px;font-size:13px;color:var(--text-muted);">
+          <span style="color:var(--accent);font-weight:700;">12 restaurants.</span>
+          &nbsp;340+ meals redistributed.&nbsp;
+          <span style="color:var(--accent);font-weight:700;">Bengaluru beta.</span>
+        </p>
+      </div>
+
+      <!-- Right: Hero image placeholder -->
+      <div class="fade-up" style="transition-delay:150ms;">
+        <div class="hero-image-placeholder" style="height:420px;display:flex;align-items:center;justify-content:center;">
+          <img src="hero-image.jpg" alt="[Product Name] — food waste reduction platform" class="w-full rounded-2xl shadow-2xl mt-8">
+        </div>
+          <!-- Decorative circles -->
+          <div style="position:absolute;top:20px;right:20px;width:80px;height:80px;border-radius:50%;border:1px solid rgba(231,111,81,0.2);"></div>
+          <div style="position:absolute;bottom:30px;left:25px;width:50px;height:50px;border-radius:50%;background:rgba(231,111,81,0.08);"></div>
+        </div>
+
+        <!-- Floating metric badges -->
+        <div class="flex gap-3 mt-4">
+          <div class="card flex-1 text-center" style="padding:14px 10px;">
+            <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);">94%</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Retention rate</div>
+          </div>
+          <div class="card flex-1 text-center" style="padding:14px 10px;">
+            <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);">30s</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">To log surplus</div>
+          </div>
+          <div class="card flex-1 text-center" style="padding:14px 10px;">
+            <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--accent);">₹0</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">Cost for NGOs</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     PROBLEM — Three stat cards + narrative
+============================================================ -->
+<section id="problem" class="section-alt" style="padding:96px 24px;">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center fade-up" style="margin-bottom:64px;">
+      <div class="section-label">The Problem</div>
+      <h2 style="font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;max-width:640px;margin:0 auto 16px;">
+        India's food system is<br/>
+        <span style="color:var(--accent);">bleeding at every meal.</span>
+      </h2>
+      <p style="color:var(--text-muted);max-width:520px;margin:0 auto;font-size:1rem;">
+        The supply side wastes. The demand side starves. The infrastructure to connect them doesn't exist at scale — yet.
+      </p>
+    </div>
+
+    <!-- Three stat cards -->
+    <div class="grid md:grid-cols-3 gap-6 stagger-children fade-up" style="margin-bottom:56px;">
+
+      <div class="card" style="padding:36px 28px;--i:0;">
+        <div style="font-size:40px;margin-bottom:16px;">🗑️</div>
+        <div class="stat-number">68M</div>
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:6px 0 12px;">Tonnes / year</div>
+        <p style="font-size:15px;color:var(--text-primary);">
+          India wastes <strong>68 million tonnes</strong> of food annually — a <span style="color:var(--accent);">₹92,000 crore</span> economic haemorrhage.
+        </p>
+      </div>
+
+      <div class="card" style="padding:36px 28px;--i:1;">
+        <div style="font-size:40px;margin-bottom:16px;">🥣</div>
+        <div class="stat-number">200M</div>
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:6px 0 12px;">Indians food insecure</div>
+        <p style="font-size:15px;color:var(--text-primary);">
+          <strong>200 million people</strong> remain chronically food insecure in the same country generating this surplus.
+        </p>
+      </div>
+
+      <div class="card" style="padding:36px 28px;--i:2;">
+        <div style="font-size:40px;margin-bottom:16px;">🍽️</div>
+        <div class="stat-number">30–40%</div>
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:6px 0 12px;">Restaurant daily prep</div>
+        <p style="font-size:15px;color:var(--text-primary);">
+          Urban restaurants discard <strong>30–40% of daily prep</strong> every night — not from negligence, but from a lack of infrastructure.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Narrative -->
+    <div class="fade-up" style="max-width:720px;margin:0 auto;text-align:center;">
+      <p style="font-size:1.1rem;color:var(--text-muted);line-height:1.8;">
+        Manual donation programs exist, but they rely on phone calls, personal networks, and luck. They are slow, unscalable, and impossible to audit.
+      </p>
+      <p style="font-size:1.1rem;color:var(--text-muted);line-height:1.8;margin-top:14px;">
+        The gap isn't goodwill. <span style="color:var(--text-primary);font-weight:500;">It's infrastructure.</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     SOLUTION — Headline + description + 5 feature cards
+============================================================ -->
+<section id="solution" class="section-base" style="padding:96px 24px;">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+      <!-- Left: Copy -->
+      <div class="fade-up">
+        <div class="section-label">The Solution</div>
+        <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:24px;line-height:1.1;">
+          AI-powered<br/>
+          <span style="color:var(--accent);">food redistribution</span><br/>
+          infrastructure.
+        </h2>
+        <p style="color:var(--text-muted);font-size:1.05rem;line-height:1.75;margin-bottom:18px;">
+          ZEROKAR is a mobile-first platform that turns surplus food management from a chore into a zero-effort, zero-cost operation for restaurants. Restaurants log surplus in 30 seconds; our AI handles everything else.
+        </p>
+        <p style="color:var(--text-muted);font-size:1.05rem;line-height:1.75;">
+          We're not a charity app. We're the <span style="color:var(--text-primary);">infrastructure layer</span> that makes food redistribution as frictionless as ordering a cab — with real-time matching, verified recipients, automated pickup, and auditable impact reporting.
+        </p>
+      </div>
+
+      <!-- Right: 5 feature cards in 2-col grid -->
+      <div class="fade-up" style="transition-delay:120ms;">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger-children">
+
+          <div class="card" style="padding:24px;--i:0;">
+            <div style="font-size:28px;margin-bottom:12px;">🤖</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px;">AI Surplus Prediction</h3>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              Predicts excess inventory 2 hours before close, giving restaurants time to act instead of react.
+            </p>
+          </div>
+
+          <div class="card" style="padding:24px;--i:1;">
+            <div style="font-size:28px;margin-bottom:12px;">📍</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px;">Real-Time NGO Matching</h3>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              Matches surplus to the nearest verified NGO with confirmed capacity — in real time, every time.
+            </p>
+          </div>
+
+          <div class="card" style="padding:24px;--i:2;">
+            <div style="font-size:28px;margin-bottom:12px;">🚚</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px;">Automated Logistics</h3>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              Pickup coordinated automatically via our logistics partner. Zero coordination overhead for the restaurant.
+            </p>
+          </div>
+
+          <div class="card" style="padding:24px;--i:3;">
+            <div style="font-size:28px;margin-bottom:12px;">📜</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px;">CSR Certificate Generation</h3>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              Auto-generates FSSAI-compliant CSR certificates with every transfer — unlocking tax benefits instantly.
+            </p>
+          </div>
+
+          <div class="card sm:col-span-2" style="padding:24px;--i:4;">
+            <div style="font-size:28px;margin-bottom:12px;">📊</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:15px;margin-bottom:6px;">Impact Dashboard</h3>
+            <p style="font-size:13px;color:var(--text-muted);line-height:1.6;">
+              Real-time reporting on meals redistributed, kg saved, CO₂ offset, and CSR value generated — shareable for brand and compliance teams.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     HOW IT WORKS — Three numbered steps in horizontal flow
+============================================================ -->
+<section id="howitworks" class="section-alt" style="padding:96px 24px;">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center fade-up" style="margin-bottom:64px;">
+      <div class="section-label">How It Works</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;">
+        Three steps. <span style="color:var(--accent);">Zero overhead.</span>
+      </h2>
+    </div>
+
+    <!-- Steps row -->
+    <div class="fade-up">
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-4">
+
+        <!-- Step 1 -->
+        <div class="card flex-1 text-center" style="padding:36px 28px;width:100%;">
+          <div style="width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#0A1F14;">
+            1
+          </div>
+          <div style="font-size:32px;margin-bottom:14px;">📱</div>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;">Log Surplus</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">
+            Restaurant staff logs food surplus on the ZEROKAR app in under 30 seconds. Photo, quantity, pickup window — done.
+          </p>
+        </div>
+
+        <!-- Arrow -->
+        <div class="step-arrow hidden md:flex items-center" style="padding-top:60px;">
+          <svg width="36" height="16" viewBox="0 0 36 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 8H32M32 8L26 2M32 8L26 14" stroke="#E76F51" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="card flex-1 text-center" style="padding:36px 28px;width:100%;">
+          <div style="width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#0A1F14;">
+            2
+          </div>
+          <div style="font-size:32px;margin-bottom:14px;">🤖</div>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;">AI Matches Recipient</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">
+            Our algorithm instantly matches the surplus to the nearest verified NGO with confirmed capacity, dietary compatibility, and pickup availability.
+          </p>
+        </div>
+
+        <!-- Arrow -->
+        <div class="step-arrow hidden md:flex items-center" style="padding-top:60px;">
+          <svg width="36" height="16" viewBox="0 0 36 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 8H32M32 8L26 2M32 8L26 14" stroke="#E76F51" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="card flex-1 text-center" style="padding:36px 28px;width:100%;">
+          <div style="width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:#0A1F14;">
+            3
+          </div>
+          <div style="font-size:32px;margin-bottom:14px;">🚚</div>
+          <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;margin-bottom:10px;">Pickup Coordinated</h3>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.65;">
+            Logistics partner handles collection and delivery with timestamped proof. Restaurant gets CSR certificate. Community gets fed.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Down arrow for mobile -->
+      <div class="flex md:hidden justify-center my-2" style="color:var(--accent);font-size:24px;">↓</div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     MARKET SIZE — TAM / SAM / SOM concentric cards
+============================================================ -->
+<section id="market" class="section-base" style="padding:96px 24px;">
+  <div class="max-w-5xl mx-auto text-center">
+
+    <div class="fade-up" style="margin-bottom:64px;">
+      <div class="section-label">Market Size</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;margin-bottom:16px;">
+        A <span style="color:var(--accent);">₹4,200 crore</span> problem<br/>
+        with no scalable solution.
+      </h2>
+      <p style="color:var(--text-muted);max-width:500px;margin:0 auto;">
+        India's food service sector is digitizing fast. ZEROKAR enters at the infrastructure layer — stickier, higher-margin, and defensible.
+      </p>
+    </div>
+
+    <!-- TAM / SAM / SOM cards in row -->
+    <div class="grid md:grid-cols-3 gap-6 fade-up stagger-children">
+
+      <!-- TAM -->
+      <div class="card" style="padding:40px 28px;--i:0;border:2px solid rgba(231,111,81,0.15);">
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;">TAM</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--accent);line-height:1;margin-bottom:12px;">
+          ₹4,200 Cr
+        </div>
+        <div style="font-size:14px;color:var(--text-muted);line-height:1.6;">
+          B2B food service SaaS across India's organized restaurant and institutional kitchen market.
+        </div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-card);font-size:12px;color:rgba(163,184,153,0.6);">
+          ₹92,000 Cr economic food loss annually
+        </div>
+      </div>
+
+      <!-- SAM -->
+      <div class="card" style="padding:40px 28px;--i:1;border:2px solid rgba(231,111,81,0.3);transform:scale(1.03);">
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">SAM ★</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--accent);line-height:1;margin-bottom:12px;">
+          ₹850 Cr
+        </div>
+        <div style="font-size:14px;color:var(--text-muted);line-height:1.6;">
+          Metro cities: Bengaluru, Delhi, Mumbai, Hyderabad, Chennai, Pune — cloud kitchens + QSR chains.
+        </div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-card);font-size:12px;color:rgba(163,184,153,0.6);">
+          6 cities, 80,000+ restaurants addressable
+        </div>
+      </div>
+
+      <!-- SOM -->
+      <div class="card" style="padding:40px 28px;--i:2;border:2px solid rgba(231,111,81,0.15);">
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;">SOM</div>
+        <div style="font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;color:var(--accent);line-height:1;margin-bottom:12px;">
+          ₹42 Cr
+        </div>
+        <div style="font-size:14px;color:var(--text-muted);line-height:1.6;">
+          Year 3 target — 1,400 restaurants across 3 metros at ₹2,999/month SaaS.
+        </div>
+        <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border-card);font-size:12px;color:rgba(163,184,153,0.6);">
+          Achievable in 36 months post-seed
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Why now callout -->
+    <div class="fade-up" style="margin-top:48px;">
+      <div class="card" style="padding:28px 36px;display:inline-flex;flex-wrap:wrap;gap:32px;align-items:center;justify-content:center;max-width:860px;">
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);">Why now →</div>
+        <div style="font-size:13px;color:var(--text-muted);">📋 FSSAI surplus food regulations (2023)</div>
+        <div style="font-size:13px;color:var(--text-muted);">🏙️ Metro cloud kitchen density surge</div>
+        <div style="font-size:13px;color:var(--text-muted);">📱 NGO digitization post-COVID</div>
+        <div style="font-size:13px;color:var(--text-muted);">💰 GST input credit for donated food</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     TRACTION — Four metric cards + partner quote
+============================================================ -->
+<section id="traction" class="section-alt" style="padding:96px 24px;">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center fade-up" style="margin-bottom:64px;">
+      <div class="section-label">Traction</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;">
+        Week 8 of beta.<br/>
+        <span style="color:var(--accent);">The numbers speak.</span>
+      </h2>
+    </div>
+
+    <!-- Four metric cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 stagger-children fade-up" style="margin-bottom:56px;">
+
+      <div class="card text-center" style="padding:32px 16px;--i:0;">
+        <div class="stat-number">12</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:8px;">Restaurants<br/>Onboarded</div>
+      </div>
+
+      <div class="card text-center" style="padding:32px 16px;--i:1;">
+        <div class="stat-number">340+</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:8px;">Meals<br/>Redistributed</div>
+      </div>
+
+      <div class="card text-center" style="padding:32px 16px;--i:2;">
+        <div class="stat-number">3</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:8px;">NGO<br/>Partners</div>
+      </div>
+
+      <div class="card text-center retention-badge" style="padding:32px 16px;--i:3;">
+        <div class="stat-number">94%</div>
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-top:8px;">Retention After<br/>Month 1</div>
+      </div>
+
+    </div>
+
+    <!-- Beta partner quote -->
+    <div class="fade-up" style="max-width:680px;margin:0 auto;">
+      <div class="card" style="padding:36px 40px;">
+        <div class="quote-bar">
+          <p style="font-size:1.15rem;font-style:italic;line-height:1.7;color:var(--text-primary);margin-bottom:16px;">
+            "We used to throw away 8 kg of food every night. Now it feeds 20 families. And we get the paperwork automatically — that's what sold us."
+          </p>
+          <div style="font-size:13px;font-weight:700;color:var(--text-muted);">
+            — Restaurant owner, Bengaluru beta cohort
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- City badge -->
+    <div class="text-center fade-up" style="margin-top:32px;">
+      <span style="font-size:13px;color:var(--text-muted);">
+        📍 Currently live in
+        <span style="color:var(--text-primary);font-weight:600;">Bengaluru</span>
+        — expanding to Delhi and Mumbai with this raise.
+      </span>
+    </div>
+
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     BUSINESS MODEL — Two-column: restaurant model + social impact
+============================================================ -->
+<section id="model" class="section-base" style="padding:96px 24px;">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center fade-up" style="margin-bottom:64px;">
+      <div class="section-label">Business Model</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;">
+        Simple revenue logic.<br/>
+        <span style="color:var(--accent);">Scalable by design.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 fade-up">
+
+      <!-- Left: Restaurant revenue model -->
+      <div class="card" style="padding:40px 36px;">
+        <div style="font-size:32px;margin-bottom:16px;">🏪</div>
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;">
+          Restaurant Revenue
+        </h3>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;">
+          The primary revenue driver — a sticky SaaS that pays for itself in tax savings.
+        </p>
+
+        <div style="background:rgba(231,111,81,0.08);border:1px solid rgba(231,111,81,0.25);border-radius:12px;padding:20px 24px;margin-bottom:20px;text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);">₹2,999</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;letter-spacing:0.08em;text-transform:uppercase;">Per restaurant / month</div>
+        </div>
+
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:var(--accent);flex-shrink:0;margin-top:2px;">✓</span>
+            Unlimited surplus logging and AI matching
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:var(--accent);flex-shrink:0;margin-top:2px;">✓</span>
+            Auto-generated <strong style="color:var(--text-primary);">FSSAI-compliant CSR certificates</strong>
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:var(--accent);flex-shrink:0;margin-top:2px;">✓</span>
+            Impact dashboard for brand + compliance teams
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:var(--accent);flex-shrink:0;margin-top:2px;">✓</span>
+            Logistics coordination handled end-to-end
+          </li>
+        </ul>
+
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-card);font-size:13px;color:var(--text-muted);">
+          <strong style="color:var(--text-primary);">Future:</strong> Logistics margin per transfer + data licensing to FMCG brands for supply chain intelligence.
+        </div>
+      </div>
+
+      <!-- Right: NGO / social impact model -->
+      <div class="card" style="padding:40px 36px;">
+        <div style="font-size:32px;margin-bottom:16px;">🤝</div>
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;">
+          NGO & Social Impact
+        </h3>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;">
+          NGOs are the supply network. Keeping them free is what creates defensible density.
+        </p>
+
+        <div style="background:rgba(163,184,153,0.07);border:1px solid rgba(163,184,153,0.2);border-radius:12px;padding:20px 24px;margin-bottom:20px;text-align:center;">
+          <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#A3B899;">₹0</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:4px;letter-spacing:0.08em;text-transform:uppercase;">Cost for NGOs — always free</div>
+        </div>
+
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;">
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:#A3B899;flex-shrink:0;margin-top:2px;">✓</span>
+            Verified, structured food donations with advance notice
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:#A3B899;flex-shrink:0;margin-top:2px;">✓</span>
+            No cold-calling restaurants or coordinating logistics
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:#A3B899;flex-shrink:0;margin-top:2px;">✓</span>
+            Digital audit trail for compliance and donor reporting
+          </li>
+          <li style="display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-muted);">
+            <span style="color:#A3B899;flex-shrink:0;margin-top:2px;">✓</span>
+            Impact metrics — meals served, kg received, beneficiaries
+          </li>
+        </ul>
+
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border-card);font-size:13px;color:var(--text-muted);">
+          NGO density creates supply-side moats. Every new NGO partner makes the platform more valuable to every restaurant.
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     TEAM — Founder card(s)
+============================================================ -->
+<section id="team" class="section-alt" style="padding:96px 24px;">
+  <div class="max-w-4xl mx-auto text-center">
+
+    <div class="fade-up" style="margin-bottom:56px;">
+      <div class="section-label">The Team</div>
+      <h2 style="font-size:clamp(2rem,4vw,3rem);font-weight:800;">
+        Built by someone who's<br/>
+        <span style="color:var(--accent);">lived inside the problem.</span>
+      </h2>
+    </div>
+
+    <div class="fade-up" style="max-width:480px;margin:0 auto;">
+      <div class="card" style="padding:44px 40px;">
+
+        <!-- Avatar placeholder -->
+        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#c05e3e);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#0A1F14;">
+          YS
+        </div>
+
+        <h3 style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;margin-bottom:4px;">
+          Yasharth Singh
+        </h3>
+        <div style="font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;">
+          Founder &amp; CEO
+        </div>
+
+        <p style="font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:20px;">
+          Computer science engineer turned F&amp;B entrepreneur. Built <strong style="color:var(--text-primary);">Mysteria</strong> from scratch into Varanasi's leading café — seeing food waste firsthand from day one. Now applying engineering thinking to the infrastructure problem he lived.
+        </p>
+
+        <div style="padding-top:20px;border-top:1px solid var(--border-card);">
+          <p style="font-size:13px;color:var(--text-muted);font-style:italic;">
+            "I watched perfectly good food go in the bin every night while knowing families 2 km away were going hungry. That's not a charity problem — it's an infrastructure problem."
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Hiring note -->
+    <div class="fade-up" style="margin-top:32px;">
+      <p style="font-size:14px;color:var(--text-muted);">
+        Actively hiring: <span style="color:var(--text-primary);">CTO · City Operations Lead · Growth Lead</span>
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- ============================================================
+     THE ASK — Bold centered, raise amount, use of funds, CTA
+============================================================ -->
+<section id="ask" class="ask-glow" style="padding:112px 24px;">
+  <div class="max-w-4xl mx-auto text-center">
+
+    <div class="fade-up">
+      <div class="section-label">The Ask</div>
+
+      <h2 style="font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.05;margin-bottom:12px;">
+        We're raising
+      </h2>
+      <div style="font-family:'Syne',sans-serif;font-size:clamp(3rem,8vw,6rem);font-weight:800;color:var(--accent);line-height:1;margin-bottom:16px;">
+        ₹1.5 Crore
+      </div>
+      <div style="font-size:1rem;color:var(--text-muted);margin-bottom:48px;letter-spacing:0.05em;text-transform:uppercase;font-weight:600;">
+        Pre-Seed Round · 2025
+      </div>
+
+      <!-- Use of funds -->
+      <div class="card" style="max-width:580px;margin:0 auto 48px;padding:36px 40px;text-align:left;">
+        <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-bottom:20px;text-align:center;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;">
+          Use of Funds
+        </h3>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:rgba(231,111,81,0.15);border:1px solid rgba(231,111,81,0.3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">⚙️</div>
+            <div>
+              <div style="font-weight:600;font-size:15px;margin-bottom:2px;">Product &amp; Technology — 40%</div>
+              <div style="font-size:13px;color:var(--text-muted);">AI model refinement, logistics API integrations, mobile app hardening</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:rgba(231,111,81,0.15);border:1px solid rgba(231,111,81,0.3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">🏙️</div>
+            <div>
+              <div style="font-weight:600;font-size:15px;margin-bottom:2px;">City Expansion — 35%</div>
+              <div style="font-size:13px;color:var(--text-muted);">Operations in Delhi and Mumbai — onboarding, logistics, NGO partnerships</div>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="width:44px;height:44px;border-radius:10px;background:rgba(231,111,81,0.15);border:1px solid rgba(231,111,81,0.3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👥</div>
+            <div>
+              <div style="font-weight:600;font-size:15px;margin-bottom:2px;">Team Building — 25%</div>
+              <div style="font-size:13px;color:var(--text-muted);">CTO, City Operations Leads, and first sales hires</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Milestone unlock -->
+      <div style="margin-bottom:44px;">
+        <p style="font-size:16px;color:var(--text-muted);">
+          This round gets us to
+          <strong style="color:var(--text-primary);">100 restaurants across 3 cities in 12 months</strong>
+          — the milestone that unlocks a Series A.
+        </p>
+      </div>
+
+      <!-- CTAs -->
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href="mailto:yasharth@zerokar.in" class="btn-primary" style="font-size:16px;padding:16px 40px;">
+          Schedule a Meeting
+        </a>
+        <a href="#model" class="btn-secondary" style="font-size:16px;padding:14px 40px;">
+          View Business Model
+        </a>
+      </div>
+
+      <!-- Urgency line -->
+      <p style="margin-top:40px;font-size:14px;color:var(--text-muted);max-width:480px;margin-left:auto;margin-right:auto;">
+        Every day we don't scale, <span style="color:var(--accent);">40 tonnes of food disappears in Delhi alone.</span>
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer style="padding:48px 24px;">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="grid md:grid-cols-3 gap-8 items-center" style="margin-bottom:32px;">
+
+      <!-- Logo + tagline -->
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-0.03em;margin-bottom:8px;">
+          ZERO<span style="color:var(--accent);">KAR</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);line-height:1.5;">
+          Cut food cost leakage<br/>before it becomes waste.
+        </p>
+      </div>
+
+      <!-- Contact -->
+      <div style="text-align:center;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Get in touch</div>
+        <a href="mailto:yasharth@zerokar.in"
+           style="color:var(--accent);font-size:15px;font-weight:600;text-decoration:none;transition:opacity 0.2s;"
+           onmouseover="this.style.opacity='0.75'"
+           onmouseout="this.style.opacity='1'">
+          yasharth@zerokar.in
+        </a>
+        <div style="margin-top:12px;">
+          <a href="#" style="font-size:13px;color:var(--text-muted);text-decoration:none;margin:0 8px;transition:color 0.2s;"
+             onmouseover="this.style.color='#F8F4E9'"
+             onmouseout="this.style.color='#A3B899'">LinkedIn</a>
+          <a href="#" style="font-size:13px;color:var(--text-muted);text-decoration:none;margin:0 8px;transition:color 0.2s;"
+             onmouseover="this.style.color='#F8F4E9'"
+             onmouseout="this.style.color='#A3B899'">Twitter / X</a>
+        </div>
+      </div>
+
+      <!-- Cities + city -->
+      <div style="text-align:right;">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Currently live in</div>
+        <div style="font-size:15px;color:var(--text-primary);font-weight:600;">📍 Bengaluru</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-top:4px;">Delhi · Mumbai — coming 2025</div>
+      </div>
+
+    </div>
+
+    <!-- Divider -->
+    <div style="height:1px;background:var(--border-card);margin-bottom:24px;"></div>
+
+    <!-- Copyright -->
+    <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
+      <p style="font-size:12px;color:rgba(163,184,153,0.5);">
+        © 2025 ZEROKAR. All rights reserved. Pre-seed stage company.
+      </p>
+      <p style="font-size:12px;color:rgba(163,184,153,0.5);">
+        Built to feed India. Not to pitch it.
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     INLINE JAVASCRIPT
+     1. Navbar scroll shadow
+     2. IntersectionObserver fade-in-up for .fade-up elements
+     3. Stagger delay assignment for .stagger-children
+============================================================ -->
+<script>
+  // ---- 1. Navbar shadow on scroll ----
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // ---- 2. Assign stagger index to children ----
+  document.querySelectorAll('.stagger-children').forEach(container => {
+    Array.from(container.children).forEach((child, i) => {
+      child.style.setProperty('--i', i);
+    });
+  });
+
+  // ---- 3. IntersectionObserver fade-in-up ----
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -60px 0px',
+    threshold: 0.08
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // animate once
+      }
+    });
+  }, observerOptions);
+
+  // Observe all .fade-up elements
+  document.querySelectorAll('.fade-up').forEach(el => {
+    observer.observe(el);
+  });
+
+  // ---- 4. Smooth scroll for anchor links ----
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
